@@ -19,15 +19,14 @@ export default function Header() {
     <>
       <div className="sticky top-0 w-full flex items-center justify-between h-16 py-2 px-6 bg-white border-b-2 border-gray-200">
         <Link to="/">
-          <p href="/" className="text-2xl font-bold text-emerald-400">
+          <p href="/" className="text-2xl font-bold text-red-600">
             Kailey and Matt's Travel Blog
           </p>
         </Link>
-        {isLoggedIn ? <a href="/dashboard">{auth.currentUser.email}</a> : null}
 
         {/* For mobile */}
         <div className="visible sm:invisible absolute top-0 right-0">
-          <Nav isLoggedIn={isLoggedIn} />
+          <Nav />
         </div>
 
         {/* For desktop */}
