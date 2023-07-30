@@ -1,7 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { data } from "../data/blog-posts";
+
+import { db, auth } from "../services/firebaseConnection";
+import {
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  collection,
+} from "firebase/firestore";
 
 export default function Home() {
   useEffect(() => {
@@ -13,24 +23,28 @@ export default function Home() {
     });
   }, []);
 
+  const [allPosts, setAllPosts] = useState([]);
+
+  useEffect(() => {
+    const userAuth = auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        console.log(authUser);
+        let querySnapshot = await getDocs(collection(db, "posts"));
+        querySnapshot.forEach((doc) => {
+          setAllPosts([...allPosts, doc.data()]);
+        });
+        console.log(allPosts);
+      } else if (!authUser) {
+        console.log("not signed in");
+      }
+      return userAuth;
+    });
+  }, []);
+
   return (
     <>
-      {data.map((post, index) => (
-        <div className="bg-gray-100">
-          <main className="max-w-4xl mx-auto py-8 px-6">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              {post.date}
-            </h1>
-            <h2 className="text-2xl font-medium text-gray-700 mb-8">
-              Location: {post.location}
-            </h2>
-            {post.paragraphs.map((paragraph, index) => (
-              <p className="text-lg text-gray-800 mb-8">
-                {paragraph}
-              </p>
-            ))}
-          </main>
-        </div>
+      {allPosts.map((post, index) => (
+        <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }} />
       ))}
     </>
   );
