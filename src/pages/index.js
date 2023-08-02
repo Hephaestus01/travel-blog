@@ -1,7 +1,5 @@
 import Home from "./Home";
 import About from "./About";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import Create from "./Create";
+import Post from "./Post"
 
-export { Home, About, Dashboard, Login, Create };
+export { Home, About, Post };

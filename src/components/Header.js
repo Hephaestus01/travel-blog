@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../services/firebaseConnection";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-
 import Nav from "./subcomponents/Nav";
 
 export default function Header() {
@@ -16,31 +15,25 @@ export default function Header() {
   });
 
   return (
-    <>
-      <div className="sticky top-0 w-full flex items-center justify-between h-16 py-2 px-6 bg-white border-b-2 border-gray-200">
-        <Link to="/">
-          <p href="/" className="text-2xl font-bold text-red-600">
-            Kailey and Matt's Travel Blog
-          </p>
-        </Link>
+    <header className="fixed top-0 left-0 w-full flex items-center justify-between h-16 px-6 bg-blue-900 text-white">
+      <Link to="/">
+        <h1 className="text-2xl font-bold">Kailey and Matt's Travel Blog</h1>
+      </Link>
 
-        {/* For mobile */}
-        <div className="visible sm:invisible absolute top-0 right-0">
-          <Nav />
-        </div>
-
-        {/* For desktop */}
-        <div className="invisible sm:visible w-96">
-          <div className="flex flex-row justify-end mx-auto">
-            <a href="/about" className="nav-link px-4">
-              About
-            </a>
-            <a href="/map" className="nav-link px-4">
-              Map
-            </a>
-          </div>
-        </div>
+      {/* For mobile */}
+      <div className="sm:hidden">
+        <Nav />
       </div>
-    </>
+
+      {/* For desktop */}
+      <nav className="hidden sm:flex space-x-4">
+        <Link to="/about" className="text-xl">
+          About
+        </Link>
+        <Link to="/map" className="text-xl">
+          Map
+        </Link>
+      </nav>
+    </header>
   );
 }
