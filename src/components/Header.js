@@ -15,7 +15,7 @@ export default function Header() {
   });
 
   return (
-    <header className="fixed top-0 left-0 w-full flex items-center justify-between h-16 px-6 bg-blue-900 text-white">
+    <header className="z-10 fixed top-0 left-0 w-full flex items-center justify-between h-16 px-6 bg-blue-900 text-white">
       <Link to="/">
         <h1 className="text-2xl font-bold">Kailey and Matt's Travel Blog</h1>
       </Link>
@@ -30,9 +30,9 @@ export default function Header() {
         <Link to="/about" className="text-xl">
           About
         </Link>
-        <Link to="/map" className="text-xl">
+        {/* <Link to="/map" className="text-xl">
           Map
-        </Link>
+        </Link> */}
       </nav>
     </header>
   );

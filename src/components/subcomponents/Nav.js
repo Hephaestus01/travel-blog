@@ -1,15 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../services/firebaseConnection";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 
-export default function Nav({ isLoggedIn }) {
-  const signout = async () => {
-    await signOut(auth);
-  };
-
+export default function Nav() {
   const [navOpen, setNavOpen] = useState(false);
 
   const ref = useRef();
@@ -47,41 +40,11 @@ export default function Nav({ isLoggedIn }) {
       {navOpen && (
         <div className="z-10 flex bg-white rounded-md mt-0 pt-16 p-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="flex flex-col text-center">
-            <Link to="/locations" onClick={useOnClickOutside}>
+            <Link to="/about" onClick={useOnClickOutside}>
               <button className="text-gray-800 hover:bg-emerald-600 font-semibold py-2 px-4 rounded-md drop-shadow-md">
-                Enrollment Centers
+                About{" "}
               </button>
             </Link>
-            {isLoggedIn ? (
-              <>
-                <Link to="/dashboard" onClick={useOnClickOutside}>
-                  <button className="text-gray-800 hover:bg-emerald-600 font-semibold py-2 px-4 rounded-md drop-shadow-md">
-                    Account Dashboard
-                  </button>
-                </Link>
-                <Link to="/" onClick={useOnClickOutside}>
-                  <button
-                    onClick={signout}
-                    className="text-gray-800 hover:bg-emerald-600 font-semibold py-2 px-4 rounded-md drop-shadow-md"
-                  >
-                    Sign Out
-                  </button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/signin" onClick={useOnClickOutside}>
-                  <button className="text-gray-800 hover:bg-emerald-600 font-semibold py-2 px-4 rounded-md drop-shadow-md">
-                    Sign In
-                  </button>
-                </Link>
-                <Link to="/signup" onClick={useOnClickOutside}>
-                  <button className="bg-emerald-400 text-gray-800 hover:bg-emerald-600 font-semibold py-2 px-4 rounded-md drop-shadow-md">
-                    Sign Up
-                  </button>
-                </Link>
-              </>
-            )}
           </div>
         </div>
       )}

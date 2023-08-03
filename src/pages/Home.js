@@ -15,7 +15,10 @@ export default function Home() {
         content_type: "blogPost",
       });
       if (entries.items) {
-        setBlogPosts([...entries.items]);
+        const sortedPosts = [...entries.items].sort((a, b) => {
+          return new Date(b.fields.date) - new Date(a.fields.date);
+        });
+        setBlogPosts(sortedPosts);
       }
     };
     fetchEntries();
@@ -25,10 +28,10 @@ export default function Home() {
   const previousPosts = blogPosts.slice(1);
 
   return (
-    <main className="container mx-auto px-6 py-8 pt-24">
+    <main className="container mx-auto md:w-3/4 px-6 py-8 pt-24">
       {recentPost && (
         <div
-          className="h-[500px] bg-cover bg-center relative rounded-lg"
+          className="h-[500px] bg-cover bg-center relative rounded-lg overflow-hidden"
           style={{
             backgroundImage: `url(${recentPost.fields.bannerImage.fields.file.url})`,
           }}
@@ -48,34 +51,32 @@ export default function Home() {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-6 mt-8">
-        {previousPosts.map((post) => (
-          <div
-            key={post.sys.id}
-            className="bg-white shadow-md rounded-md overflow-hidden"
-          >
-            <img
-              className="w-full h-[200px] object-cover rounded-t-md"
-              src={post.fields.bannerImage.fields.file.url}
-              alt={post.fields.title}
-            />
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-black">
-                {post.fields.title}
-              </h2>
-              <h3 className="text-xl text-black">
-                {new Date(post.fields.date).toLocaleDateString()}
-              </h3>
-              <Link
-                to={`/post/${post.sys.id}`}
-                className="mt-4 inline-block bg-blue-500 text-white rounded px-5 py-3"
-              >
-                Read More
-              </Link>
-            </div>
+      {previousPosts.map((post) => (
+        <div
+          key={post.sys.id}
+          className="flex flex-col sm:flex-row bg-white shadow-md rounded-md overflow-hidden mt-6"
+        >
+          <img
+            className="w-full sm:w-1/2 h-[200px] object-cover rounded-t-md"
+            src={post.fields.bannerImage.fields.file.url}
+            alt={post.fields.title}
+          />
+          <div className="w-full sm:w-1/2 p-6">
+            <h2 className="text-2xl font-bold text-black">
+              {post.fields.title}
+            </h2>
+            <h3 className="text-xl text-black">
+              {new Date(post.fields.date).toLocaleDateString()}
+            </h3>
+            <Link
+              to={`/post/${post.sys.id}`}
+              className="mt-4 inline-block bg-blue-500 text-white rounded px-5 py-3"
+            >
+              Read More
+            </Link>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </main>
   );
 }
