@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createClient } from "contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 
 const RICHTEXT_OPTIONS = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
-      // render the EMBEDDED_ASSET as you need
       return (
         <img
           src={`https://${node.data.target.fields.file.url}`}
@@ -17,6 +16,15 @@ const RICHTEXT_OPTIONS = {
         />
       );
     },
+    [BLOCKS.PARAGRAPH]: (node, children) => {
+      return <p className="mb-8">{children}</p>;
+    },
+    [BLOCKS.HEADING_6]: (node, children) => {
+      return <h6 className="mb-8 text-sm text-center">{children}</h6>;
+    },
+  },
+  renderMark: {
+    [MARKS.SUBSCRIPT]: (text) => <sub className="">{text}</sub>,
   },
 };
 
@@ -40,7 +48,7 @@ export default function Post() {
   if (!post) return null;
 
   return (
-    <main className="container mx-auto px-6 py-8 pt-24">
+    <main className="container mx-auto md:w-3/4 px-6 py-8 pt-24">
       <img
         className="w-full h-[500px] object-cover rounded-t-md"
         src={post.fields.bannerImage.fields.file.url}
