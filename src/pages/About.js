@@ -4,7 +4,8 @@ export default function About() {
   return (
     <main className="container mx-auto px-6 py-8 pt-24">
       <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2">
+        <p>Coming soon!</p>
+        {/* <div className="w-full md:w-1/2">
           <img
             src="https://via.placeholder.com/500"
             alt="About Us"
@@ -21,7 +22,7 @@ export default function About() {
             globe, and we're excited to share our adventures and travel tips
             with you. Thanks for joining us on our journey!
           </p>
-        </div>
+        </div> */}
       </div>
     </main>
   );
