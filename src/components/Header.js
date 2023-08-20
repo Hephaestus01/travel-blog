@@ -21,9 +21,9 @@ export default function Header() {
       </Link>
 
       {/* For mobile */}
-      <div className="sm:hidden">
+      {/* <div className="sm:hidden">
         <Nav />
-      </div>
+      </div> */}
 
       {/* For desktop */}
       <nav className="hidden sm:flex space-x-4">

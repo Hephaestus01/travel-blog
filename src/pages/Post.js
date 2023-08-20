@@ -8,13 +8,14 @@ const RICHTEXT_OPTIONS = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: (node) => (
       <img
+        className=""
         src={`https://${node.data.target.fields.file.url}`}
         height={node.data.target.fields.file.details.image.height}
         width={node.data.target.fields.file.details.image.width}
         alt={node.data.target.fields.description}
       />
     ),
-    [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-8">{children}</p>,
+    [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-4">{children}</p>,
     [BLOCKS.HEADING_6]: (node, children) => (
       <h6 className="mb-8 text-sm text-center">{children}</h6>
     ),
@@ -48,9 +49,9 @@ export default function Post() {
   }, [id]);
 
   // Reset scroll to the top when a new post is loaded
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [id]);
 
   const postIndex = allPosts.findIndex((post) => post.sys.id === id);
   const previousPost =
@@ -62,40 +63,47 @@ export default function Post() {
   return (
     <main className="container mx-auto md:w-3/4 px-6 py-8 pt-24">
       <img
-        className="w-full h-[500px] object-cover rounded-t-md"
+        className="w-full h-[200px] sm:h-[500px] object-cover rounded-xl mb-4"
         src={currentPost.fields.bannerImage.fields.file.url}
         alt={currentPost.fields.title}
       />
-      <div className="mt-8">
-        <h1 className="text-4xl font-bold">{currentPost.fields.title}</h1>
-        <h2 className="text-xl">
-          {new Date(currentPost.fields.date).toLocaleDateString()}
-        </h2>
-        {documentToReactComponents(
-          currentPost.fields.blogText,
-          RICHTEXT_OPTIONS
-        )}
+      <div className="">
+        <div className="bg-white px-4 pb-2 rounded-lg mt-8">
+          <h1 className="my-2 pt-4 text-4xl font-bold">
+            {currentPost.fields.title}
+          </h1>
+          <h2 className="my-2 text-xl">
+            Written by {currentPost.fields.author}
+          </h2>
+          <h2 className="my-2 text-xl">
+            {new Date(currentPost.fields.date).toLocaleDateString()}
+          </h2>
+          {documentToReactComponents(
+            currentPost.fields.blogText,
+            RICHTEXT_OPTIONS
+          )}
+        </div>
 
-        <div className="mt-6">
+        <div className="mt-6 pt-6">
           {previousPost && (
             <Link
               to={`/post/${previousPost.sys.id}`}
-              className="bg-blue-500 text-white rounded px-5 py-3 mr-4"
+              className="bg-blue-900 text-white rounded px-5 py-3 mr-4"
             >
-              Older Post
+              Previous Post
             </Link>
           )}
           {nextPost && (
             <Link
               to={`/post/${nextPost.sys.id}`}
-              className="bg-blue-500 text-white rounded px-5 py-3"
+              className="bg-blue-900 text-white rounded px-5 py-3"
             >
-              Newer Post
+              Next Post
             </Link>
           )}
         </div>
 
-        <div className="flex flex-wrap mt-8">
+        <div className="flex flex-wrap my-8 rounded-lg">
           {allPosts
             .filter((post) => post.sys.id !== id)
             .map((post, i) => (
@@ -110,9 +118,11 @@ export default function Post() {
                     backgroundImage: `url(${post.fields.bannerImage.fields.file.url})`,
                   }}
                 >
-                  <div className="absolute bottom-0 p-6 bg-blue-900 text-white">
-                    <h2 className="text-2xl font-bold">{post.fields.title}</h2>
-                    <h3 className="text-xl">
+                  <div className="w-full absolute bottom-0 p-2 bg-blue-900 text-white">
+                    <h2 className="text-xl sm:text-2xl font-bold">
+                      {post.fields.title}
+                    </h2>
+                    <h3 className="text-sm sm:text-xl">
                       {new Date(post.fields.date).toLocaleDateString()}
                     </h3>
                   </div>
