@@ -31,7 +31,7 @@ export default function Home() {
     <main className="container mx-auto md:w-3/4 px-6 py-8 pt-24">
       {recentPost && (
         <div
-          className="h-[500px] bg-cover bg-center relative rounded-lg overflow-hidden"
+          className="h-[500px] bg-cover bg-center sm:bg-start-100 relative rounded-lg overflow-hidden"
           style={{
             backgroundImage: `url(${recentPost.fields.bannerImage.fields.file.url})`,
           }}
